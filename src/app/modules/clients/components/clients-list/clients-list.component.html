@@ -1,0 +1,74 @@
+<mat-card>
+    <mat-card-title>Clients List
+
+    </mat-card-title>
+    <mat-card-content>
+        <!-- <mat-icon>search</mat-icon> -->
+        <mat-form-field align="end">
+            <mat-icon matPrefix class="search-icon">search</mat-icon>
+            <input type="text" matInput placeholder="Search" matFilter (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>
+        <div class="mat-elevation-z2">
+            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Gender Column -->
+                <ng-container matColumnDef="gender">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
+                    <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+                </ng-container>
+
+                <!-- Birth Date Column -->
+                <ng-container matColumnDef="birthDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Birth Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.birthDate}} </td>
+                </ng-container>
+
+                <!-- IBAN Column -->
+                <ng-container matColumnDef="iban">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> IBAN </th>
+                    <td mat-cell *matCellDef="let element"> {{element.iban}} </td>
+                </ng-container>
+
+                <!-- Email Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <!-- Full Address Column -->
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Address </th>
+                    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                </ng-container>
+
+                <!-- actions -->
+                <ng-container matColumnDef="actions">
+
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="accent" (click)="editClient(element._id)" matTooltip="Edit Client Information">
+                            <mat-icon aria-label="Edit">edit</mat-icon> 
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <div *matNoDataRow class="center-content">No data was found</div>
+                <div *ngIf="isLoading" class="center-content">
+                    <mat-progress-spinner color="primary" mode="indeterminate">
+                    </mat-progress-spinner>
+                </div>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

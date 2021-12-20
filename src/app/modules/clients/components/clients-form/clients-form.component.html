@@ -1,0 +1,121 @@
+ <ng-template appPlaceholder></ng-template>
+<div class="form-container">
+  <form [formGroup]="form" (ngSubmit)="submitForm(form)">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Edit Client Information</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <div class="form-control">
+            <mat-form-field appearance="standard" class="form-control">
+              <mat-label>Name</mat-label>
+              <input matInput inputmode="tel" placeholder="Enter your name" formControlName="name" #nameInput>
+              <mat-hint>Minimum character 10: {{ nameInput.value.length }}/10</mat-hint>
+              <mat-error>Name is required</mat-error>
+              <mat-error *ngIf="(form.get('name')).errors?.minlength">
+                Please enter more than 10 character
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div style="margin-top:10px;">
+            <div style="margin-right:3%; color:#6b6b6b;">
+              <mat-label>Gender</mat-label>
+            </div>
+            <mat-radio-group formControlName="gender" class="radio-group">
+              <mat-radio-button value="male">Male</mat-radio-button>
+              <mat-radio-button value="female">Female</mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="(form.get('gender')).errors?.required">Gender is required</mat-error>
+          </div>
+
+          <div>
+            <mat-form-field appearance="standard" class="form-control">
+              <mat-label>Birth Date</mat-label>
+              <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthDate">
+              <mat-datepicker-toggle matSuffix [for]="picker">
+                <mat-icon matDatepickerToggleIcon>event</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error>Birth Date is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field appearance="standard" class="form-control">
+              <mat-label>IBAN:</mat-label>
+              <input matInput placeholder="IBAN" formControlName="iban" />
+              <mat-error>IBAN is required</mat-error>
+              <!-- server-side validation errors -->
+              <!-- <mat-error *ngIf="form.get('iban').errors?.serverError">
+            {{ form.get('iban').errors?.serverError }}
+          </mat-error> -->
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field appearance="legacy" class="form-control">
+              <mat-label>Email Address:</mat-label>
+              <input matInput type="email" formControlName="email" placeholder="Your email">
+              <mat-icon matSuffix>mail_outline</mat-icon>
+              <mat-error *ngIf="(form.get('email')).errors?.required">Email is required</mat-error>
+              <mat-error *ngIf="(form.get('email')).errors?.pattern">Please enter valid email</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field appearance="standard" class="form-control">
+              <mat-label>Post Code:</mat-label>
+              <input matInput placeholder="Post Code" formControlName="postCode" />
+              <mat-error>Post Code is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="standard" style="width: 59%;">
+              <mat-label>House no. | addition:</mat-label>
+              <input matInput placeholder="House no." formControlName="houseNr" />
+              <mat-error>House no. required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard" style="width: 40%;margin-left: 1%;">
+              <!-- <mat-label>House no. | addition:</mat-label> -->
+              <input matInput placeholder="addition:" formControlName="addition" />
+              <mat-error>addition is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field appearance="standard" class="form-control">
+              <mat-label>City:</mat-label>
+              <input matInput placeholder="postcode" formControlName="city" />
+              <mat-error>City is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field appearance="standard" hintLabel="Country name required" class="form-control">
+              <mat-label>Country</mat-label>
+              <mat-select matNativeControl name="country" formControlName="country">
+                <mat-option *ngFor="let option of countries" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="(form.get('country')).errors?.required">Country is required</mat-error>
+            </mat-form-field>
+
+          </div>
+
+
+          <div mat-dialog-actions align="end">
+            <button mat-raised-button (click)="cancelEdit()" type="button" color="warn" style="margin-right:2px">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+  <!-- <div>{{ form.value | json }}</div> -->
+</div>
+
+
+
